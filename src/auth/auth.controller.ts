@@ -1,4 +1,4 @@
-import { Body, Controller, ParseIntPipe, Post, Req } from "@nestjs/common";
+import { Body, Controller, Get, ParseIntPipe, Post, Req } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Request } from "express";
 import { AuthDto } from "./dtos"; // ACCESS VIA index.ts
@@ -10,6 +10,12 @@ export class AuthController {
 
     // CRAETE INSTANCE AND IMPORT AUTHSERVICE 
     constructor(private authService: AuthService) { }
+
+    @Get('/')
+    greeting() {
+        return "Hello, auth"
+    }
+
 
     // FUNCTION API
     // @Post('signup') // POST /auth/signup 
@@ -40,9 +46,9 @@ export class AuthController {
     }
 
     @Post('signin') // POST /auth/signip 
-    signin() {
+    signin(@Body() dto: AuthDto) {
         // return "I am SignIn!"
-        return this.authService.signin() // CALL TO USE THE FUNCTION IN SERVICE
+        return this.authService.signin(dto) // CALL TO USE THE FUNCTION IN SERVICE
     }
 
 }
